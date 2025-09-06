@@ -680,7 +680,7 @@
 </script>
 
 <svelte:head>
-	<title>{$WEBUI_NAME}</title>
+	<title>{$WEBUI_NAME || 'Ambertone OffSec'}</title>
 	<link crossorigin="anonymous" rel="icon" href="{WEBUI_BASE_URL}/static/favicon.png" />
 </svelte:head>
 
