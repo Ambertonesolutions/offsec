@@ -33,63 +33,26 @@
 		</script>
 
 		<script>
-			// On page load or when changing themes, best to add inline in `head` to avoid FOUC
+			// FORCE DARK MODE ALWAYS
 			(() => {
 				const metaThemeColorTag = document.querySelector('meta[name="theme-color"]');
-				const prefersDarkTheme = window.matchMedia('(prefers-color-scheme: dark)').matches;
 
-				if (!localStorage?.theme) {
-					localStorage.theme = 'system';
-				}
+				// Apply dark class to <html>
+				document.documentElement.classList.add('dark');
+				metaThemeColorTag.setAttribute('content', '#171717');
 
-				if (localStorage.theme === 'system') {
-					document.documentElement.classList.add(prefersDarkTheme ? 'dark' : 'light');
-					metaThemeColorTag.setAttribute('content', prefersDarkTheme ? '#171717' : '#ffffff');
-				} else if (localStorage.theme === 'oled-dark') {
-					document.documentElement.style.setProperty('--color-gray-800', '#101010');
-					document.documentElement.style.setProperty('--color-gray-850', '#050505');
-					document.documentElement.style.setProperty('--color-gray-900', '#000000');
-					document.documentElement.style.setProperty('--color-gray-950', '#000000');
-					document.documentElement.classList.add('dark');
-					metaThemeColorTag.setAttribute('content', '#000000');
-				} else if (localStorage.theme === 'light') {
-					document.documentElement.classList.add('light');
-					metaThemeColorTag.setAttribute('content', '#ffffff');
-				} else if (localStorage.theme === 'her') {
-					document.documentElement.classList.add('her');
-					metaThemeColorTag.setAttribute('content', '#983724');
-				} else {
-					document.documentElement.classList.add('dark');
-					metaThemeColorTag.setAttribute('content', '#171717');
-				}
+				// Persist theme in localStorage
+				localStorage.theme = 'dark';
 
-				window.matchMedia('(prefers-color-scheme: dark)').addListener((e) => {
-					if (localStorage.theme === 'system') {
-						if (e.matches) {
-							document.documentElement.classList.add('dark');
-							document.documentElement.classList.remove('light');
-							metaThemeColorTag.setAttribute('content', '#171717');
-						} else {
-							document.documentElement.classList.add('light');
-							document.documentElement.classList.remove('dark');
-							metaThemeColorTag.setAttribute('content', '#ffffff');
-						}
-					}
-				});
-				const isDarkMode = document.documentElement.classList.contains('dark');
-
+				// Load dark splash logo
 				const logo = document.createElement('img');
 				logo.id = 'logo';
 				logo.style =
 					'position: absolute; width: auto; height: 6rem; top: 44%; left: 50%; transform: translateX(-50%); display:block;';
-				logo.src = isDarkMode ? '/static/splash-dark.png' : '/static/splash.png';
+				logo.src = '/static/splash-dark.png';
 
 				document.addEventListener('DOMContentLoaded', function () {
 					const splash = document.getElementById('splash-screen');
-					if (document.documentElement.classList.contains('her')) {
-						return;
-					}
-
 					if (splash) splash.prepend(logo);
 				});
 			})();
@@ -118,10 +81,8 @@
 					position: absolute;
 					top: 33%;
 					left: 50%;
-
 					width: 24rem;
 					transform: translateX(-50%);
-
 					display: flex;
 					flex-direction: column;
 					align-items: center;
@@ -141,7 +102,6 @@
 							position: absolute;
 							width: 100%;
 							height: 0.75rem;
-
 							border-radius: 9999px;
 							background-color: #fafafa9a;
 						"
@@ -160,10 +120,6 @@
 					></div>
 				</div>
 			</div>
-
-			<!-- <span style="position: absolute; bottom: 32px; left: 50%; margin: -36px 0 0 -36px">
-				Footer content
-			</span> -->
 		</div>
 	</body>
 </html>
